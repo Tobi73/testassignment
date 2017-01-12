@@ -1,0 +1,15 @@
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\TenderPlanAssignment.exe.config
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\TenderPlanAssignment.exe
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\TenderPlanAssignment.pdb
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\MongoDB.Bson.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\MongoDB.Driver.Core.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\MongoDB.Driver.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\nunit.framework.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\MongoDB.Bson.xml
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\MongoDB.Driver.xml
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\MongoDB.Driver.Core.xml
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\nunit.framework.xml
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\obj\Debug\TenderPlanAssignment.csprojResolveAssemblyReference.cache
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\obj\Debug\TenderPlanAssignment.exe
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\obj\Debug\TenderPlanAssignment.pdb
