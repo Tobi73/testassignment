@@ -30,25 +30,17 @@ namespace TenderPlanAssignment
             }
         }
 
-        public async Task insertNewDocument(string[] args)
+        public async Task insertNewDocument(PhoneDictionaryEntry newEntry)
         {
             IMongoCollection<PhoneDictionaryEntry> collection = null;
             try
             {
-                collection = getCollectionFromDatabase();
+                collection = getCollectionFromDatabase("PersonEntry");
             }
             catch (Exception e)
             {
                 throw e;
             }
-            PhoneDictionaryEntry newEntry = new PhoneDictionaryEntry
-            {
-                FirstName = args[1],
-                Surname = args[2],
-                Patronymic = args[3],
-                PhoneNumber = args[4],
-                Region = args[5]
-            };
             await collection.InsertOneAsync(newEntry);
         }
 
@@ -57,7 +49,7 @@ namespace TenderPlanAssignment
             IMongoCollection<PhoneDictionaryEntry> collection = null;
             try
             {
-                collection = getCollectionFromDatabase();
+                collection = getCollectionFromDatabase("PersonEntry");
             }
             catch (Exception e)
             {
@@ -88,7 +80,7 @@ namespace TenderPlanAssignment
             IMongoCollection<PhoneDictionaryEntry> collection = null;
             try
             {
-                collection = getCollectionFromDatabase();
+                collection = getCollectionFromDatabase("PersonEntry");
             }
             catch (Exception e)
             {
@@ -123,11 +115,11 @@ namespace TenderPlanAssignment
             filewriter.WriteLine(newDocument);
         }
 
-        private IMongoCollection<PhoneDictionaryEntry> getCollectionFromDatabase()
+        private IMongoCollection<PhoneDictionaryEntry> getCollectionFromDatabase(string collectionName)
         {
             MongoClient connection = new MongoClient(client);
             IMongoDatabase database = connection.GetDatabase("PhoneDictionary");
-            return database.GetCollection<PhoneDictionaryEntry>("PersonEntry");
+            return database.GetCollection<PhoneDictionaryEntry>(collectionName);
         }
 
     }

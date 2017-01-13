@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace TenderPlanAssignment
 {
-    class PhoneDictionaryEntry
+    public class PhoneDictionaryEntry
     {
 
         public ObjectId Id

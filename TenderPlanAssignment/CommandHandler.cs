@@ -11,11 +11,11 @@ namespace TenderPlanAssignment
     public class CommandHandler
     {
 
-        DatabaseOperationHandler handler;
+        DatabaseOperationHandler databaseHandler;
 
         public CommandHandler(DatabaseOperationHandler handler)
         {
-            this.handler = handler;
+            this.databaseHandler = handler;
         }
 
         public void processCommand(String[] input)
@@ -25,24 +25,39 @@ namespace TenderPlanAssignment
                 switch (input[0])
                 {
                     case "add":
-                        handler.insertNewDocument(input).GetAwaiter().GetResult();
+                        StringArgsToPhoneDictionaryDocument converter = new StringArgsToPhoneDictionaryDocument();
+                        PhoneDictionaryEntry newEntry = converter.formObjectFromArguments(input);
+                        databaseHandler.insertNewDocument(newEntry).GetAwaiter().GetResult();
                         break;
                     case "search":
-                        handler.searchDocument(input[1]);
+                        databaseHandler.searchDocument(input[1]);
                         break;
                     case "remove":
                         break;
                     case "restore":
                         break;
                     case "dump":
-                        handler.exportDocuments(input[1]).GetAwaiter().GetResult();
+                        if(input.Length == 2)
+                        {
+                            StringArgsToFilepathForDBDump checker = new StringArgsToFilepathForDBDump();
+                            string filepath = checker.formObjectFromArguments(input);
+                            databaseHandler.exportDocuments(filepath).GetAwaiter().GetResult();
+                        } else
+                        {
+                            Directory.CreateDirectory(Directory.GetCurrentDirectory() +"/export");
+                            databaseHandler.exportDocuments("export/dumpfile.csv").GetAwaiter().GetResult();
+                        }
                         break;
                     case "show":
-                        handler.displayDocuments(null).GetAwaiter().GetResult();
+                        databaseHandler.displayDocuments(null).GetAwaiter().GetResult();
                         break;
                     default:
                         break;
                 }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("Wrong number of arguments!");
             }
             catch (Exception e)
             {

@@ -13,3 +13,7 @@ C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\
 C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\obj\Debug\TenderPlanAssignment.csprojResolveAssemblyReference.cache
 C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\obj\Debug\TenderPlanAssignment.exe
 C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\obj\Debug\TenderPlanAssignment.pdb
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\nunit.core.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\nunit.core.interfaces.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\nunit.util.dll
+C:\Users\gman0_000\Dropbox\Tenderplan\TenderPlanAssignment\TenderPlanAssignment\bin\Debug\NUnit.VisualStudio.TestAdapter.dll
