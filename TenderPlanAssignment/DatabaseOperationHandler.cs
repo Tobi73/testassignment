@@ -37,14 +37,6 @@ namespace TenderPlanAssignment
             {
                 collection = getCollectionFromDatabase();
             }
-            catch (MongoException e)
-            {
-                throw e;
-            }
-            catch (TimeoutException e)
-            {
-                throw e;
-            }
             catch (Exception e)
             {
                 throw e;
@@ -66,14 +58,6 @@ namespace TenderPlanAssignment
             try
             {
                 collection = getCollectionFromDatabase();
-            }
-            catch (MongoException e)
-            {
-                throw e;
-            }
-            catch (TimeoutException e)
-            {
-                throw e;
             }
             catch (Exception e)
             {
@@ -106,14 +90,6 @@ namespace TenderPlanAssignment
             {
                 collection = getCollectionFromDatabase();
             }
-            catch (MongoException e)
-            {
-                throw e;
-            }
-            catch (TimeoutException e)
-            {
-                throw e;
-            }
             catch (Exception e)
             {
                 throw e;
@@ -131,10 +107,6 @@ namespace TenderPlanAssignment
                             {
                                 writeDocumentInFile(entry, filewriter);
                             }
-                            catch (IOException e)
-                            {
-                                throw e;
-                            }
                             catch (Exception e)
                             {
                                 throw e;
@@ -147,41 +119,15 @@ namespace TenderPlanAssignment
 
         private void writeDocumentInFile(PhoneDictionaryEntry entry, StreamWriter filewriter)
         {
-            try
-            {
-                string newDocument = entry.FirstName + ";" + entry.Surname + ";" + entry.Patronymic + ";" + entry.PhoneNumber + ";" + entry.Region;
-                filewriter.WriteLine(newDocument);
-            } catch(IOException e)
-            {
-                throw e;
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
+            string newDocument = entry.FirstName + ";" + entry.Surname + ";" + entry.Patronymic + ";" + entry.PhoneNumber + ";" + entry.Region;
+            filewriter.WriteLine(newDocument);
         }
 
         private IMongoCollection<PhoneDictionaryEntry> getCollectionFromDatabase()
         {
-            IMongoCollection<PhoneDictionaryEntry> retrievedCollection = null;
-            try
-            {
-                MongoClient connection = new MongoClient(client);
-                IMongoDatabase database = connection.GetDatabase("PhoneDictionary");
-                retrievedCollection = database.GetCollection<PhoneDictionaryEntry>("PersonEntry");
-            } catch (MongoException e)
-            {
-                throw e;
-            }
-            catch(TimeoutException e)
-            {
-                throw e;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            return retrievedCollection;
+            MongoClient connection = new MongoClient(client);
+            IMongoDatabase database = connection.GetDatabase("PhoneDictionary");
+            return database.GetCollection<PhoneDictionaryEntry>("PersonEntry");
         }
 
     }

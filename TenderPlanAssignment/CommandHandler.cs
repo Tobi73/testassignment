@@ -44,18 +44,6 @@ namespace TenderPlanAssignment
                         break;
                 }
             }
-            catch (MongoException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (TimeoutException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch(IOException e)
-            {
-                Console.WriteLine(e.Message);
-            }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
