@@ -13,7 +13,7 @@ namespace TenderPlanAssignment
         public bool ensureArgumentsAreValid(string[] arguments)
         {
             string stringToCheck = arguments[1];
-            Regex mask = new Regex(@".+[.]cvs$");
+            Regex mask = new Regex(@".+[.]csv$");
             if (!mask.IsMatch(stringToCheck))
             {
                 return false;

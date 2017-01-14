@@ -10,11 +10,6 @@ namespace TenderPlanAssignment
     {
         static void Main(string[] args)
         {
-            if(args.Length > 2 || args.Length == 0)
-            {
-                Console.WriteLine("Wrong number of arguments!");
-                return;
-            }
             DatabaseOperationHandler connection = new DatabaseOperationHandler("mongodb://localhost");
             CommandHandler handler = new CommandHandler(connection);
             handler.processCommand(args);

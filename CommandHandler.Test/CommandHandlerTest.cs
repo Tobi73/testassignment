@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using TenderPlanAssignment;
+using MongoDB.Bson;
+
 
 namespace TenderPlanAssignmentTest.Test
 {
@@ -59,7 +61,6 @@ namespace TenderPlanAssignmentTest.Test
             Assert.AreEqual(properEntry.Patronymic, testedEntry.Patronymic);
             Assert.AreEqual(properEntry.PhoneNumber, testedEntry.PhoneNumber);
         }
-
 
 
     }
