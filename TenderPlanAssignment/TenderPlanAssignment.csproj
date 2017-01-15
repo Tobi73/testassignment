@@ -79,7 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandler.cs" />
+    <Compile Include="CommandProcessor.cs" />
     <Compile Include="DatabaseOperationHandler.cs" />
     <Compile Include="IArgumentHandler.cs" />
     <Compile Include="PhoneDictionaryEntry.cs" />

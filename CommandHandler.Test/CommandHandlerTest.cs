@@ -15,7 +15,7 @@ namespace TenderPlanAssignmentTest.Test
     {
 
         DatabaseOperationHandler testDataHandler;
-        CommandHandler testCommandHandler;
+        CommandProcessor testCommandHandler;
         StringArgsToPhoneDictionaryDocument testDocumentConverter;
         StringArgsToFilepathForDBDump testFilePathConverter;
 
@@ -23,7 +23,7 @@ namespace TenderPlanAssignmentTest.Test
         public void TestSetUp()
         {
             testDataHandler = new DatabaseOperationHandler("mongodb://localhost");
-            testCommandHandler = new CommandHandler(testDataHandler);
+            testCommandHandler = new CommandProcessor(testDataHandler);
             testDocumentConverter = new StringArgsToPhoneDictionaryDocument();
             testFilePathConverter = new StringArgsToFilepathForDBDump();
         }

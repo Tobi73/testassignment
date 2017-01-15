@@ -11,7 +11,7 @@ namespace TenderPlanAssignment
         static void Main(string[] args)
         {
             DatabaseOperationHandler connection = new DatabaseOperationHandler("mongodb://localhost");
-            CommandHandler handler = new CommandHandler(connection);
+            CommandProcessor handler = new CommandProcessor(connection);
             handler.processCommand(args);
             Console.ReadKey();
         }

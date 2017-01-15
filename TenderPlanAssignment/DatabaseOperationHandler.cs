@@ -139,7 +139,7 @@ namespace TenderPlanAssignment
                     while (!filereader.EndOfStream)
                     {
                         PhoneDictionaryEntry formedDocument = formDocumentFromFile(filereader);
-                        insertNewDocument(formedDocument).GetAwaiter().GetResult();
+                        await insertNewDocument(formedDocument);
                     }
                 }
             }
