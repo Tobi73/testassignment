@@ -4,6 +4,9 @@ using MongoDB.Bson;
 
 namespace TenderPlanAssignment
 {
+    /// <summary>
+    /// Запись в телефонной книге
+    /// </summary>
     public class PhoneDictionaryEntry
     {
 
@@ -31,6 +34,10 @@ namespace TenderPlanAssignment
             set;
         }
 
+        /// <summary>
+        /// Получение имен всех атрибутов объекта
+        /// </summary>
+        /// <returns></returns>
         public static List<String> getAttributes()
         {
             var attributes = new List<String>();

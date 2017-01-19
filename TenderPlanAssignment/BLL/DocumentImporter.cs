@@ -6,9 +6,18 @@ using TenderPlanAssignment.Interfaces;
 
 namespace TenderPlanAssignment.BLL
 {
+
+    /// <summary>
+    /// Класс, который отвечает за импорт документов из файлов формата .csv
+    /// </summary>
     class DocumentImporter : IDocumentImporter<PhoneDictionaryEntry>
     {
 
+        /// <summary>
+        /// Построчная итерация файла
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
         public IEnumerable<PhoneDictionaryEntry> ImportDocuments(String filepath)
         {
             using (var sr = new StreamReader(filepath, Encoding.UTF8))
@@ -20,6 +29,12 @@ namespace TenderPlanAssignment.BLL
             }
         }
 
+
+        /// <summary>
+        /// Формирование документа из строки в файле
+        /// </summary>
+        /// <param name="filereader"></param>
+        /// <returns></returns>
         private PhoneDictionaryEntry FormDocumentFromFile(StreamReader filereader)
         {
             string entryInString = filereader.ReadLine();

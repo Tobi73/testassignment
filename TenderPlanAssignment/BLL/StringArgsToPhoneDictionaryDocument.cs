@@ -3,8 +3,16 @@ using System.Text.RegularExpressions;
 
 namespace TenderPlanAssignment
 {
+    /// <summary>
+    /// Класс для проверки аргумента операции add.
+    /// </summary>
     public class StringArgsToPhoneDictionaryDocument : IArgumentHandler<PhoneDictionaryEntry>
     {
+        /// <summary>
+        /// Проверка строки с информацией о новом пользователе.
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
         public bool EnsureArgumentsAreValid(string[] arguments)
         {
             var stringToCheck = arguments[1];
@@ -19,6 +27,11 @@ namespace TenderPlanAssignment
             }
         }
 
+        /// <summary>
+        /// Формирование новой записи из строки, введенной пользователем.
+        /// </summary>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
         public PhoneDictionaryEntry FormObjectFromArguments(string[] arguments)
         {
             if (arguments.Length != 2)

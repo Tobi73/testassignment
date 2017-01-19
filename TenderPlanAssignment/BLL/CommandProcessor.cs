@@ -5,9 +5,17 @@ using TenderPlanAssignment.BLL;
 using TenderPlanAssignment.Repository;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using TenderPlanAssignment.Models;
 
 namespace TenderPlanAssignment
 {
+
+    /// <summary>
+    /// Класс для обработки основных операций программы.
+    /// У большинства методов в качестве аргументов выступает массив строк,
+    /// который формирует пользователь при использовании программы
+    /// </summary>
+
     public class CommandProcessor
     {
 
@@ -34,15 +42,21 @@ namespace TenderPlanAssignment
             indexer = keys;
         }
 
+        /// <summary>
+        /// Поиск записей в базе по введеной строке с помощью регулярного выражения.
+        /// Записи возвращаются в виде обработанной строки.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public IEnumerable<String> FindDocuments(string[] input)
         {
             if (!InputIsValid(input) || input.Length != 2)
             {
                 throw new Exception("Wrong number of arguments!");
             }
-            DocumentCollection collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
+            DocumentCollection<PhoneDictionaryEntry> collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
             var regex = input[1];
-            FilterDefinition<PhoneDictionaryEntry> filter = getRegexFilters(regex);
+            FilterDefinition<PhoneDictionaryEntry> filter = GetRegexFilters(regex);
             var converter = new DocumentToStringConverter();
             foreach (var entry in collection.FindDocument(filter))
             {
@@ -50,13 +64,19 @@ namespace TenderPlanAssignment
             }
         }
 
+        /// <summary>
+        /// Получение всех записей из базы данных.
+        /// Записи возвращаются в виде обработанной строки.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public IEnumerable<String> GetAllDocuments(string[] input)
         {
             if (!InputIsValid(input) || input.Length != 1)
             {
                 throw new Exception("Wrong number of arguments!");
             }
-            DocumentCollection collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
+            DocumentCollection<PhoneDictionaryEntry> collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
             var converter = new DocumentToStringConverter();
             foreach (var entry in collection.GetAllData())
             {
@@ -64,6 +84,12 @@ namespace TenderPlanAssignment
             }
         }
 
+        /// <summary>
+        /// Добавление новой записи в базу.
+        /// Вторым аргументом должна быть строка в формате "Фамилия Имя Отчество Телефон".
+        /// Телефон должен состоять ровно из 10 цифр.
+        /// </summary>
+        /// <param name="input"></param>
         public void AddDocument(string[] input)
         {
             if (!InputIsValid(input) || input.Length != 2)
@@ -72,10 +98,17 @@ namespace TenderPlanAssignment
             }
             var entryForInsertConverter = new StringArgsToPhoneDictionaryDocument();
             PhoneDictionaryEntry newEntry = entryForInsertConverter.FormObjectFromArguments(input);
-            DocumentCollection collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
+            newEntry.Region = TryDetermineRegion(newEntry);
+            DocumentCollection<PhoneDictionaryEntry> collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
             collection.InsertDocument(newEntry);
         }
 
+        /// <summary>
+        /// Удаление записи из базы.
+        /// Вторым аргументом должна быть строка в формате "Фамилия Имя Отчество Телефон".
+        /// Телефон должен состоять ровно из 10 цифр.
+        /// </summary>
+        /// <param name="input"></param>
         public void RemoveDocument(string[] input)
         {
             if (!InputIsValid(input) || input.Length != 2)
@@ -84,11 +117,16 @@ namespace TenderPlanAssignment
             }
             var entryForDeletionConverter = new StringArgsToPhoneDictionaryDocument();
             PhoneDictionaryEntry entryForDeletion = entryForDeletionConverter.FormObjectFromArguments(input);
-            DocumentCollection collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
+            DocumentCollection<PhoneDictionaryEntry> collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
             collection.DeleteDocument(entryForDeletion);
         }
 
-        public void ExportDocuments(String[] input)
+        /// <summary>
+        /// Добавление записей в базу из файла.
+        /// Вторым аргументом должен являться путь к файлу в формате .csv.
+        /// </summary>
+        /// <param name="input"></param>
+        public void ImportDocuments(String[] input)
         {
             if (!InputIsValid(input) || input.Length != 2)
             {
@@ -97,14 +135,22 @@ namespace TenderPlanAssignment
             var checker = new StringArgsToFilepathForDBDump();
             var filepath = checker.FormObjectFromArguments(input);
             var importer = new DocumentImporter();
-            DocumentCollection collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
+            DocumentCollection<PhoneDictionaryEntry> collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
             foreach (var entry in importer.ImportDocuments(filepath))
             {
                 collection.InsertDocument(entry);
             }
         }
 
-        public void ImportDocuments(String[] input)
+        /// <summary>
+        /// Экспорт данных из базы.
+        /// Вторым аргументом может выступать путь к файлу в формате .csv,
+        /// куда будут загружаться данные.
+        /// Если второй аргумент отсутствует, то экспорт в проводится в
+        /// файл export/dumpfile.csv.
+        /// </summary>
+        /// <param name="input"></param>
+        public void ExportDocuments(String[] input)
         {
             if (!InputIsValid(input))
             {
@@ -121,10 +167,16 @@ namespace TenderPlanAssignment
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/export");
             }
             var exporter = new DocumentExporter();
-            DocumentCollection collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
+            DocumentCollection<PhoneDictionaryEntry> collection = databaseHandler.GetDocumentCollection("PersonEntry", indexer);
             exporter.ExportDocuments(filepath, collection.GetAllData());
         }
 
+
+        /// <summary>
+        /// Проверка на верное количество введеных аргументов.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private bool InputIsValid(String[] input)
         {
             if (input.Length > 2 || input.Length == 0)
@@ -134,7 +186,13 @@ namespace TenderPlanAssignment
             return true;
         }
 
-        private FilterDefinition<PhoneDictionaryEntry> getRegexFilters(String regex)
+        /// <summary>
+        /// Получение фильтров по регулярному выражению по всем атрибутам документа
+        /// коллекции PhoneDictionary.
+        /// </summary>
+        /// <param name="regex"></param>
+        /// <returns></returns>
+        private FilterDefinition<PhoneDictionaryEntry> GetRegexFilters(String regex)
         {
             var filters = new List<FilterDefinition<PhoneDictionaryEntry>>();
             foreach (String attribute in PhoneDictionaryEntry.getAttributes())
@@ -142,6 +200,46 @@ namespace TenderPlanAssignment
                 filters.Add(Builders<PhoneDictionaryEntry>.Filter.Regex(attribute, new BsonRegularExpression(regex)));
             }
             return Builders<PhoneDictionaryEntry>.Filter.Or(filters);
+        }
+
+        /// <summary>
+        /// Определение региона пользователя по коду региона в номере телефона.
+        /// При выполнении метода используется дополнительная коллекция Region,
+        /// в которой находятся документы с кодами регионов.
+        /// Если код региона отсутствует в коллекции Region, 
+        /// то атрибут Region в новом документе остается пустым.
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
+        private String TryDetermineRegion(PhoneDictionaryEntry entry)
+        {
+            DocumentCollection<RegionEntry> collection = databaseHandler.GetDocumentCollection<RegionEntry>("Region");
+            foreach (var document in collection.GetAllData())
+            {
+                if (ArePhoneRegionsEqual(entry.PhoneNumber, document.Code))
+                {
+                    return document.Region;
+                }
+            }
+            return String.Empty;
+        }
+
+
+        /// <summary>
+        /// Сравнение кода региона в новом документе
+        /// с кодом региона из коллекции Region.
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="regionCode"></param>
+        /// <returns></returns>
+        private bool ArePhoneRegionsEqual(String phoneNumber, int regionCode)
+        {
+            int regionCodeInNumber = Convert.ToInt32(phoneNumber.Substring(0, 3));
+            if (regionCode.Equals(regionCodeInNumber))
+            {
+                return true;
+            }
+            else return false;
         }
 
     }

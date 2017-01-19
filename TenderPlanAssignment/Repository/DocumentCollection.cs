@@ -5,11 +5,15 @@ using MongoDB.Driver;
 
 namespace TenderPlanAssignment
 {
-    public class DocumentCollection
+    /// <summary>
+    /// Класс для взаимодействия с коллекцией из базы данных.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class DocumentCollection<T>
     {
 
         private IMongoDatabase database;
-        private IndexKeysDefinition<PhoneDictionaryEntry> indexParams;
+        private IndexKeysDefinition<T> indexParams;
         private String collectionName;
 
         public DocumentCollection(IMongoDatabase database, String collectionName)
@@ -18,35 +22,52 @@ namespace TenderPlanAssignment
             this.collectionName = collectionName;
         }
 
-        public DocumentCollection(IMongoDatabase database, String collectionName, IndexKeysDefinition<PhoneDictionaryEntry> indexParams)
+        public DocumentCollection(IMongoDatabase database, String collectionName, IndexKeysDefinition<T> indexParams)
         {
             this.database = database;
             this.collectionName = collectionName;
             this.indexParams = indexParams;
         }
 
-        public IEnumerable<PhoneDictionaryEntry> FindDocument(FilterDefinition<PhoneDictionaryEntry> filter)
+        /// <summary>
+        /// Поиск документа в коллекции по фильтру.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public IEnumerable<T> FindDocument(FilterDefinition<T> filter)
         {
-            IMongoCollection<PhoneDictionaryEntry> collection = GetCollectionFromDatabase();
-            return collection.Find<PhoneDictionaryEntry>(filter).ToEnumerable<PhoneDictionaryEntry>();
+            IMongoCollection<T> collection = GetCollectionFromDatabase();
+            return collection.Find<T>(filter).ToEnumerable<T>();
         }
 
-        public void DeleteDocument(PhoneDictionaryEntry entryForDeletion)
+        /// <summary>
+        /// Удаление документа из коллекции.
+        /// </summary>
+        /// <param name="entryForDeletion"></param>
+        public void DeleteDocument(T entryForDeletion)
         {
-            IMongoCollection<PhoneDictionaryEntry> collection = GetCollectionFromDatabase();
+            IMongoCollection<T> collection = GetCollectionFromDatabase();
             collection.DeleteOne(entryForDeletion.ToBsonDocument());
         }
 
-        public void InsertDocument(PhoneDictionaryEntry newEntry)
+        /// <summary>
+        /// Добавление документа в коллекцию.
+        /// </summary>
+        /// <param name="newEntry"></param>
+        public void InsertDocument(T newEntry)
         {
-            IMongoCollection<PhoneDictionaryEntry> collection = GetCollectionFromDatabase();
+            IMongoCollection<T> collection = GetCollectionFromDatabase();
             collection.InsertOne(newEntry);
         }
 
-        public IEnumerable<PhoneDictionaryEntry> GetAllData()
+        /// <summary>
+        /// Получение всех документов из коллекции.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<T> GetAllData()
         {
-            IMongoCollection<PhoneDictionaryEntry> collection = GetCollectionFromDatabase();
-            using (var cursor = collection.Find<PhoneDictionaryEntry>(FilterDefinition<PhoneDictionaryEntry>.Empty).ToCursor())
+            IMongoCollection<T> collection = GetCollectionFromDatabase();
+            using (var cursor = collection.Find<T>(FilterDefinition<T>.Empty).ToCursor())
             {
                 while (cursor.MoveNext())
                 {
@@ -59,9 +80,13 @@ namespace TenderPlanAssignment
             }
         }
 
-        public IMongoCollection<PhoneDictionaryEntry> GetCollectionFromDatabase()
+        /// <summary>
+        /// Получение коллекции из базы данных.
+        /// </summary>
+        /// <returns></returns>
+        public IMongoCollection<T> GetCollectionFromDatabase()
         {
-            var collection = database.GetCollection<PhoneDictionaryEntry>(collectionName);
+            var collection = database.GetCollection<T>(collectionName);
             if (indexParams != null)
             {
                 collection.Indexes.CreateOne(indexParams);

@@ -87,6 +87,7 @@
     <Compile Include="Interfaces\IDocumentConverter.cs" />
     <Compile Include="Interfaces\IDocumentExporter.cs" />
     <Compile Include="Interfaces\IDocumentImporter.cs" />
+    <Compile Include="Models\RegionEntry.cs" />
     <Compile Include="Repository\DocumentCollection.cs" />
     <Compile Include="Interfaces\IArgumentHandler.cs" />
     <Compile Include="Models\PhoneDictionaryEntry.cs" />
