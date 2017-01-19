@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TenderPlanAssignment", "TenderPlanAssignment\TenderPlanAssignment.csproj", "{D3B26F74-DBAB-431F-BBEE-558EB9EF30DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandHandler.Test", "CommandHandler.Test\CommandHandler.Test.csproj", "{B2814710-8C57-44EE-857E-E28E32DFDA98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Test", "CommandHandler.Test\BLL.Test.csproj", "{B2814710-8C57-44EE-857E-E28E32DFDA98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
